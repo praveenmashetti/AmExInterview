@@ -10,6 +10,8 @@ import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.time.Duration
 import com.interview.test.orderservice.model.Item
+import com.interview.test.orderservice.model.DiscountCode
+
 import com.interview.test.orderservice.exception.OrderServiceException
 
 
@@ -22,7 +24,6 @@ class OrderService {
 
 
 		if (!cart.isEmpty()) {
-
 			//group the cart items
 			val cartItems = cart.groupingBy { it.apply {} }.eachCount()
 
@@ -36,7 +37,7 @@ class OrderService {
 				} else {
 					//Add item to the bill
 					println("Adding $count $item(s) to the order")
-					cartPrice = cartPrice + (count * selectedItem?.price)
+					cartPrice = cartPrice + calculatePrice(selectedItem, count)
 				}
 			}
 
@@ -48,6 +49,16 @@ class OrderService {
 		}
 
 		return cartPrice
+	}
+	
+	fun calculatePrice(item:Item, count:Int): Int {
+		//cal regualar price
+		val regualrPrice = count * item.price
+		//apply discount if applicable
+		val discount = DiscountCode.applyDiscount(item, count)
+		
+		println("Applied a disocunt of $discount on $item")
+		return (regualrPrice-discount) 
 	}
 
 }

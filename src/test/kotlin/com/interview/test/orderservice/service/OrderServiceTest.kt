@@ -19,7 +19,7 @@ class OrderServiceTest {
 		val service = OrderService()
 		val items = arrayOf<String>("Apple", "Orange", "Apple", "Apple")
 		var price = service.placeOrder(items)
-		Assertions.assertEquals(price, 2.05)
+		Assertions.assertEquals(price, 1.45)
 	}
 
 	@Test

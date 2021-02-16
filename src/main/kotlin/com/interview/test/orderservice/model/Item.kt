@@ -1,9 +1,9 @@
 package com.interview.test.orderservice.model
 
-enum class Item(val type: String, val price: Int) {
+enum class Item(val type: String, val price: Int, val enableDiscount: Boolean, val discountCode: DiscountCode) {
 
-	Apple("Apple", 60),
-	Orange("Orange", 25);
+	Apple("Apple", 60, true, DiscountCode.BOGO),
+	Orange("Orange", 25, true, DiscountCode.B2GO);
 
 
 	/**
